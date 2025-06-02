@@ -102,7 +102,7 @@
 						<label class="input-group-text col-md-2" id="">아이디</label>
 						<input type="text" class="form-control col-md-10" 
 							   name="id" placeholder="아이디" required
-							   value="<%= loginUser.getId() %>">
+							   value="<%= loginUser.getId() %>" readonly>
 					</div>
 					
 					<div class="input-group mb-3 row">

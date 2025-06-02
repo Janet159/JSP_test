@@ -1,6 +1,7 @@
 package shop.dao;
 
 import java.io.FileReader;
+import java.io.InputStream;
 import java.io.Reader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -29,8 +30,10 @@ public class JDBConnection {
 			ClassLoader classLoader = JDBConnection.class.getClassLoader();
 	        String projectRootPath = classLoader.getResource("").getPath();
 			Reader reader = new FileReader(projectRootPath + "/db.properties");
+//			InputStream input = classLoader.getResourceAsStream("db.properties");
 			Properties properties = new Properties();
 			properties.load(reader);
+//			properties.load(input);
 			
 			String driver = properties.getProperty("driver");
 			String url = properties.getProperty("url");

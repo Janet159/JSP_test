@@ -1,3 +1,6 @@
+<%@page import="shop.dto.PersistentLogin"%>
+<%@page import="shop.dao.UserRepository"%>
+<%@page import="shop.dto.User"%>
 <%@page import="java.net.URLDecoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -13,16 +16,49 @@
 		String root = request.getContextPath();
 		String error = request.getParameter("error");
 		
-		// 이미 로그인한 경우
 		String loginId = (String) session.getAttribute("loginId");
 		loginId = loginId != null ? loginId : "";
 		
+	    if (loginId.equals("")) {
+	        Cookie[] cookies = request.getCookies();
+	        if (cookies != null) {
+	            for (Cookie c : cookies) {
+	                if (c.getName().equals("remember-me")) {
+	                    String token = c.getValue();
+	                    
+	                    UserRepository userDAO = new UserRepository();
+	                    PersistentLogin persistentLogin = userDAO.selectTokenByToken(token);
+	                    
+	                    if (persistentLogin != null) {
+	                        String userId = persistentLogin.getUserId();
+	                        User loginUser = userDAO.getUserById(userId);
+	                        
+	                        if (loginUser != null) {
+	                            // 세션에 아이디 등록
+	                            session.setAttribute("loginId", loginUser.getId());
+	                            loginId = loginUser.getId(); // 로컬 변수도 갱신
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+		// 이미 로그인한 경우
 		if( loginId != null && !loginId.equals("") ) {
 			response.sendRedirect(root + "/user/logged.jsp");
 		}
 		
 		// 아이디 저장 쿠키 가져오기
-		
+		String rememberId = null;
+		Cookie[] cookies2 = request.getCookies();
+		if (cookies2 != null) {
+		    for (Cookie c : cookies2) {
+		        if (c.getName().equals("remember-id")) {
+		        	loginId = c.getValue();
+		        	rememberId = "on";
+		        }
+		    }
+		}
 		
 	%>
 	<jsp:include page="/layout/header.jsp" />
@@ -47,6 +83,7 @@
 	    	<div class="item">
 	    	  <%
 	    	  	if( rememberId != null && rememberId.equals("on") ) {
+	    	  		
 	    	  %>
 			      <input class="form-check-input" type="checkbox" name="remember-id" id="flexCheckDefault1"
 			      		 checked>
