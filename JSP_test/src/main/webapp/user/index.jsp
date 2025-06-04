@@ -2,6 +2,8 @@
 <%@page import="shop.dto.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="/layout/jstl.jsp" %>
+<%@ include file="/layout/common.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,12 +20,17 @@
 			<div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary">
 			    <ul class="nav nav-pills flex-column mb-auto">
 			      <!-- 로그인 시 -->
+				<%
+					// login 오류 방지 목적으로 해뒀어요! 구현 완료 후 아래 코드 제거하기 
+					boolean login = true;
+				%>
+				
 			      <% if( login ) { %>
 			      	
 			      	
 			      <% } %>
 			      <li>
-			        <a href="<%= root %>/user/order.jsp" class="nav-link link-body-emphasis">
+			        <a href="${root}/user/order.jsp" class="nav-link link-body-emphasis">
 			          주문내역
 			        </a>
 			      </li>
@@ -40,8 +47,8 @@
 			<!-- 마이 페이지 -->
 			<div class="container shop m-auto mb-5">
 				<div class="btn-box d-grid gap-2">
-					<a href="<%= root %>/user/update.jsp" class="btn btn-outline-primary btn-lg px-4 gap-3">회원정보 수정</a>
-					<a href="<%= root %>/user/order.jsp" class="btn btn-outline-primary btn-lg px-4 gap-3">주문내역</a>
+					<a href="${root}/user/update.jsp" class="btn btn-outline-primary btn-lg px-4 gap-3">회원정보 수정</a>
+					<a href="${root}/user/order.jsp" class="btn btn-outline-primary btn-lg px-4 gap-3">주문내역</a>
 				</div>
 			</div>
 			

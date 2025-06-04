@@ -24,6 +24,8 @@
 		// 회원인 경우
 		
 		
+		// 오류 방지용 임시로 해뒀어요! 구현 할때 지우기 
+		boolean login = true;
 	%>
 	
 	<jsp:include page="/layout/header.jsp" />
@@ -35,15 +37,15 @@
 			      <!-- 로그인 시 -->
 			      <% if( login ) { %>
 			      <li class="nav-item">
-			        <a href="<%= root %>/user/index.jsp" class="nav-link link-body-emphasis">
+			        <a href="${root}/user/index.jsp" class="nav-link link-body-emphasis">
 			          마이 페이지
 			        </a>
 			      </li>
 			      <li class="nav-item">
-			        <a href="<%= root %>/user/update.jsp" class="nav-link link-body-emphasis">
+			        <a href="${root}/user/update.jsp" class="nav-link link-body-emphasis">
 			          회원정보 수정
 			        </a>
-			      </li>
+			      </li> 
 			      <% }  %>
 			      
 			      <li>
@@ -68,7 +70,7 @@
 			
 			<!-- 주문 내역 영역 -->
 			<div class="container shop m-auto mb-5">
-					<form action="<%= root %>/user/order_pro.jsp" method="post">
+					<form action="${root}/user/order_pro.jsp" method="post">
 					<% if( !login ) { %>
 						<div class="mb-5">
 							<table class="table">
