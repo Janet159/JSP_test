@@ -15,7 +15,7 @@ public class OrderRepository extends JDBConnection {
 	 * @return
 	 */
 	public int insert(Order order) {
-		
+		return 0; 
 	}
 
 	/**
@@ -23,7 +23,7 @@ public class OrderRepository extends JDBConnection {
 	 * @return
 	 */
 	public int lastOrderNo() {
-		
+		return 0; 
 	}
 
 	
@@ -33,7 +33,8 @@ public class OrderRepository extends JDBConnection {
 	 * @return
 	 */
 	public List<Product> list(String userId) {
-
+		List list = null;
+		return list;
 	}
 	
 	/**
@@ -43,7 +44,8 @@ public class OrderRepository extends JDBConnection {
 	 * @return
 	 */
 	public List<Product> list(String phone, String orderPw) {
-		
+		List list = null;
+		return list;
 		
 	}
 	
