@@ -1,8 +1,8 @@
 package filter;
 
-import javax.servlet.Filter;
-import javax.servlet.annotation.WebFilter;
-import javax.servlet.http.HttpFilter;
+import jakarta.servlet.Filter;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpFilter;
 
 /**
  * Servlet Filter implementation class LoginFilter
