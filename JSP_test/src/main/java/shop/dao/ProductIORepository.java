@@ -72,6 +72,42 @@ public class ProductIORepository extends JDBConnection {
 
 	    return list;
 	}
+	public List<ProductIO> selectByOrderPhonePw(String phone, String orderPw) {
+	    List<ProductIO> list = new ArrayList<>();
+
+	    String sql = "SELECT p.io_no, p.product_id, p.order_no, p.amount, p.type, p.io_date, p.user_id " +
+	                 "FROM product_io p " +
+	                 "JOIN `order` o ON p.order_no = o.order_no " +
+	                 "WHERE o.phone = ? AND o.orderPw = ? " +
+	                 "ORDER BY p.io_date DESC";
+
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, phone);
+	        psmt.setString(2, orderPw);
+	        rs = psmt.executeQuery();
+
+	        while (rs.next()) {
+	            ProductIO io = new ProductIO();
+
+	            io.setIoNo(rs.getInt("io_no"));
+	            io.setProductId(rs.getString("product_id"));
+	            io.setOrderNo(rs.getInt("order_no"));
+	            io.setAmount(rs.getInt("amount"));
+	            io.setType(rs.getString("type"));
+	            io.setIoDate(rs.getTimestamp("io_date"));
+	            io.setUserId(rs.getString("user_id"));
+
+	            list.add(io);
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("비회원 주문내역 조회 중 오류 발생");
+	        e.printStackTrace();
+	    }
+
+	    return list;
+	}
+
 
 	
 
