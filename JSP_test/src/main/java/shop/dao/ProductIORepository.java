@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import shop.dto.Product;
+import shop.dto.ProductIO;
+import shop.dto.User;
 
 public class ProductIORepository extends JDBConnection {
 
@@ -37,6 +39,40 @@ public class ProductIORepository extends JDBConnection {
 
         return result;
 	}
+	public List<ProductIO> selectByUserId(String userId) {
+	    List<ProductIO> list = new ArrayList<>();
+
+	    String sql = "SELECT io_no, product_id, order_no, amount, type, io_date, user_id "
+	               + "FROM product_io "
+	               + "WHERE user_id = ? "
+	               + "ORDER BY io_date DESC";
+
+	    try {
+	        psmt = con.prepareStatement(sql);
+	        psmt.setString(1, userId);
+	        rs = psmt.executeQuery();
+
+	        while (rs.next()) {
+	            ProductIO io = new ProductIO();
+
+	            io.setIoNo(rs.getInt("io_no"));
+	            io.setProductId(rs.getString("product_id"));
+	            io.setOrderNo(rs.getInt("order_no"));
+	            io.setAmount(rs.getInt("amount"));
+	            io.setType(rs.getString("type"));
+	            io.setIoDate(rs.getTimestamp("io_date"));
+	            io.setUserId(rs.getString("user_id"));
+
+	            list.add(io);
+	        }
+	    } catch (SQLException e) {
+	        System.err.println("입출고 내역 조회 중 오류 발생");
+	        e.printStackTrace();
+	    }
+
+	    return list;
+	}
+
 	
 
 }
