@@ -33,10 +33,9 @@
 		// 회원인 경우
 	    if (loginId != null) {
 	        ioList = productIODao.selectByUserId(loginId);
-	    } else if (orderPhone != null && orderPw != null && !orderPhone.isEmpty() && !orderPw.isEmpty()) {
-	        ioList = productIODao.selectByOrderPhonePw(orderPhone, orderPw);
+	    } else {
+	        ioList = (List<ProductIO>) session.getAttribute("orderList");
 	    }
-		
 		
 	%>
 	
@@ -82,8 +81,8 @@
 			
 			<!-- 주문 내역 영역 -->
 			<div class="container shop m-auto mb-5">
+					<% if( loginId == null && ioList == null) { %>
 					<form action="<%= root %>/user/order_pro.jsp" method="post">
-					<% if( loginId == null ) { %>
 						<div class="mb-5">
 							<table class="table">
 								<tr>
@@ -103,9 +102,9 @@
 								<button type="submit" class="btn btn-outline-primary btn-lg px-4 gap-3">조회</button>
 							</div>
 						</div>
-					<% } %>
 					</form>
-				<% if( loginId != null || ( orderPhone != null && !orderPhone.isEmpty() ) ) { %>
+					<% } %>
+				<% if (loginId != null || ioList != null && !ioList.isEmpty()) { %>
 				<!-- 주문 내역 목록 -->
 				<table class="table table-striped table-hover table-bordered text-center align-middle">
 					<thead>

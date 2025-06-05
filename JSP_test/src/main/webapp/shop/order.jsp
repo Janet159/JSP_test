@@ -24,7 +24,6 @@
     session.setAttribute("orderPhone", phone);
     session.setAttribute("orderCountry", country);
 
-    // 예시 주문번호 생성 (실제는 DB insert 후 생성되는 값 사용)
     String orderNo = "ORD-" + System.currentTimeMillis();
     session.setAttribute("orderNo", orderNo);
     

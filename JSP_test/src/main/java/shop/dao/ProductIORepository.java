@@ -78,7 +78,7 @@ public class ProductIORepository extends JDBConnection {
 	    String sql = "SELECT p.io_no, p.product_id, p.order_no, p.amount, p.type, p.io_date, p.user_id " +
 	                 "FROM product_io p " +
 	                 "JOIN `order` o ON p.order_no = o.order_no " +
-	                 "WHERE o.phone = ? AND o.orderPw = ? " +
+	                 "WHERE o.phone = ? AND o.order_pw = ? " +
 	                 "ORDER BY p.io_date DESC";
 
 	    try {
