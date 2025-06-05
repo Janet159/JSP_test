@@ -14,6 +14,7 @@
     String addressName = request.getParameter("addressName");
     String shippingDate = request.getParameter("shippingDate");
     String phone = request.getParameter("phone");
+    String country = request.getParameter("country");
 
     // 세션에 배송정보 저장
     session.setAttribute("orderName", name);
@@ -21,6 +22,7 @@
     session.setAttribute("orderAddress", addressName);
     session.setAttribute("orderShippingDate", shippingDate);
     session.setAttribute("orderPhone", phone);
+    session.setAttribute("orderCountry", country);
 
     // 예시 주문번호 생성 (실제는 DB insert 후 생성되는 값 사용)
     String orderNo = "ORD-" + System.currentTimeMillis();
@@ -61,7 +63,7 @@
     </div>
 
     <div class="container order mb-5">
-        <form action="complete.jsp" method="post">
+        <form action="order_pro.jsp" method="post">
 
             <!-- 배송 정보 출력 -->
             <div class="ship-box">
