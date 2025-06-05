@@ -16,16 +16,38 @@
 <body>   
 	<% 
 
-		// ...
-	
+		OrderRepository orderDAO = new OrderRepository();
+		// 주문목록 저장할 리스트
+		List<Product> orderList = new ArrayList<>();
+		int orderCount = 0;
+		
+	    String orderPhone = null;
+	    String orderPw = null;
 	
 		// 주문 내역 목록을 세션에서 가져오기
+		User loginUser = (User) session.getAttribute("loginUser");
+		boolean login = (loginUser != null);
 		
 		// 회원인 경우
+		if (login) {
+		// 회원인 경우: 세션에서 userId 가져오기
+		String userId = "yeji"; // ← 테스트용 하드코딩, 실제론 세션에서 가져와야 함
+
+		orderList = orderDAO.list(userId);
+		orderCount = orderList.size();
+		} 
+		else {
+		// 비회원인 경우: 파라미터에서 전화번호, 주문비밀번호 받아오기
+		request.setCharacterEncoding("UTF-8");
+		orderPhone = request.getParameter("phone");
+		orderPw = request.getParameter("orderPw");
+
+		if (orderPhone != null && orderPw != null) {
+			orderList = orderDAO.list(orderPhone, orderPw);
+			orderCount = orderList.size();
+			}
+		}
 		
-		
-		// 오류 방지용 임시로 해뒀어요! 구현 할때 지우기 
-		boolean login = true;
 	%>
 	
 	<jsp:include page="/layout/header.jsp" />

@@ -80,7 +80,6 @@ public class UserRepository extends JDBConnection {
 	/**
 	 * 로그인을 위한 사용자 조회
 	 * @param id
-	 * @param pw
 	 * @return
 	 */
 	public User getUserById(String id) {
