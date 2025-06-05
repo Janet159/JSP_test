@@ -19,6 +19,7 @@
 <body>   
 	<% 
 
+
 		// ...
 	
 		// 비회원용 파라미터 (order_pro.jsp에서 넘겨받을 경우 대비)
@@ -36,7 +37,25 @@
 	    } else if (orderPhone != null && orderPw != null && !orderPhone.isEmpty() && !orderPw.isEmpty()) {
 	        ioList = productIODao.selectByOrderPhonePw(orderPhone, orderPw);
 	    }
+
 		
+		// 회원
+		if(loginUser != null){
+			String userId = loginUser.getId();
+			orderList = orderRepository.list(userId);
+		} // 비회원 
+		else {
+			orderPhone = request.getParameter("phone");
+			orderPw = request.getParameter("orderPw");
+			
+			if(orderPhone != null && orderPw != null){
+				orderList = orderRepository.list(orderPhone, orderPw);
+			}
+		}
+		
+		int sum = 0; 
+		orderCount = orderList.size();
+
 		
 	%>
 	
@@ -120,9 +139,11 @@
 					</thead>
 					<tbody>
 						<%
+
 							int sum = 0;
 							for(int i = 0 ; i < ioList.size() ; i++) {
 								ProductIO io = ioList.get(i);
+
 						%>
 						<tr>
 			                <td><%= io.getIoNo() %></td>
