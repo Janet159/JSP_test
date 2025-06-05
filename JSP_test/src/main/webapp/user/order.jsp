@@ -1,3 +1,5 @@
+<%@page import="shop.dao.ProductIORepository"%>
+<%@page import="shop.dto.ProductIO"%>
 <%@page import="shop.dao.OrderRepository"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="shop.dto.Product"%>
@@ -19,10 +21,21 @@
 
 		// ...
 	
+		// 비회원용 파라미터 (order_pro.jsp에서 넘겨받을 경우 대비)
+		String orderPhone = request.getParameter("phone");
+		String orderPw = request.getParameter("orderPw");
 	
 		// 주문 내역 목록을 세션에서 가져오기
-		
+	    List<ProductIO> ioList = new ArrayList<>();
+
+	    ProductIORepository productIODao = new ProductIORepository();
+
 		// 회원인 경우
+	    if (loginId != null) {
+	        ioList = productIODao.selectByUserId(loginId);
+	    } else if (orderPhone != null && orderPw != null && !orderPhone.isEmpty() && !orderPw.isEmpty()) {
+	        ioList = productIODao.selectByOrderPhonePw(orderPhone, orderPw);
+	    }
 		
 		
 	%>
@@ -108,18 +121,16 @@
 					<tbody>
 						<%
 							int sum = 0;
-							for(int i = 0 ; i < orderCount ; i++) {
-								Product product = orderList.get(i);
-								int total = product.getUnitPrice() * product.getQuantity();
-								sum += total;
+							for(int i = 0 ; i < ioList.size() ; i++) {
+								ProductIO io = ioList.get(i);
 						%>
 						<tr>
-							<td><%= product.getOrderNo() %></td>			
-							<td><%= product.getName() %></td>			
-							<td><%= product.getUnitPrice() %></td>			
-							<td><%= product.getQuantity() %></td>			
-							<td><%= total %></td>			
-							<td></td>			
+			                <td><%= io.getIoNo() %></td>
+			                <td><%= io.getProductId() %></td>
+			                <td><%= io.getOrderNo() %></td>
+			                <td><%= io.getAmount() %></td>
+			                <td><%= io.getType() %></td>
+			                <td><%= io.getIoDate() %></td>			
 						</tr>
 						<%
 							}
@@ -127,7 +138,7 @@
 					</tbody>
 					<tfoot>
 						<%
-							if( orderList.isEmpty() ) {
+							if( ioList.isEmpty() ) {
 						%>
 						<tr>
 							<td colspan="6">추가된 상품이 없습니다.</td>	
