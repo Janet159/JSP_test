@@ -1,6 +1,7 @@
 <%@page import="shop.dao.ProductRepository"%>
 <%@page import="java.util.List"%>
 <%@page import="shop.dto.Product"%>
+<%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,7 +20,14 @@
 		<div class="col-lg-6 mx-auto">
 			<p class="lead mb-4">Shop 쇼핑몰 입니다.</p>
 			<div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-					
+				<a href="${root}/shop/products.jsp" class="btn btn-primary btn-lg px-4 gap-3">상품목록</a>
+				
+				<%-- 로그인 여부에 따라 다르게 보이게 --%>
+				<% if (loginId == null) { %>
+					<a href="${root}/user/login.jsp" class="btn btn-outline-primary btn-lg px-4">로그인</a>
+				<% } else { %>
+					<a href="${root}/user/logout.jsp" class="btn btn-outline-danger btn-lg px-4">로그아웃</a>
+				<% } %>
 			</div>
 		</div>
 	</div>
