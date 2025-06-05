@@ -16,14 +16,33 @@
 </head>
 <body>   
 	<% 
+		OrderRepository orderRepository = new OrderRepository();
+		
+		List<Product> orderList = new ArrayList<>();
+		int orderCount = 0; 
+		
+		User loginUser = (User) session.getAttribute("loginUser");
+		
+		String orderPhone = null;
+		String orderPw = null;
+		
+		// 회원
+		if(loginUser != null){
+			String userId = loginUser.getId();
+			orderList = orderRepository.list(userId);
+		} // 비회원 
+		else {
+			orderPhone = request.getParameter("phone");
+			orderPw = request.getParameter("orderPw");
+			
+			if(orderPhone != null && orderPw != null){
+				orderList = orderRepository.list(orderPhone, orderPw);
+			}
+		}
+		
+		int sum = 0; 
+		orderCount = orderList.size();
 
-		// ...
-	
-	
-		// 주문 내역 목록을 세션에서 가져오기
-		
-		// 회원인 경우
-		
 		
 	%>
 	
@@ -107,7 +126,6 @@
 					</thead>
 					<tbody>
 						<%
-							int sum = 0;
 							for(int i = 0 ; i < orderCount ; i++) {
 								Product product = orderList.get(i);
 								int total = product.getUnitPrice() * product.getQuantity();
