@@ -200,7 +200,7 @@
 
 			let form = document.updateForm
 
-			let check = confirm('정말 탈퇴하시겠습니까?')
+			let check = confirm('정말 탈퇴하시겠습니까??')
 
 			if( check ) {
 				form.action = 'delete.jsp'
@@ -212,11 +212,3 @@
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
