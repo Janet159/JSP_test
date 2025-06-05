@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="shop.dao.UserRepository"%>
 <%@page import="shop.dto.User"%>
+<%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -25,15 +26,12 @@
 	    String orderPw = null;
 	
 		// 주문 내역 목록을 세션에서 가져오기
-		User loginUser = (User) session.getAttribute("loginUser");
-		boolean login = (loginUser != null);
+		boolean login = (loginId != null);
 		
 		// 회원인 경우
 		if (login) {
 		// 회원인 경우: 세션에서 userId 가져오기
-		String userId = "yeji"; // ← 테스트용 하드코딩, 실제론 세션에서 가져와야 함
-
-		orderList = orderDAO.list(userId);
+		orderList = orderDAO.list(loginId);
 		orderCount = orderList.size();
 		} 
 		else {

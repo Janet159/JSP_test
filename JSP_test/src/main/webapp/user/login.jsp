@@ -2,6 +2,7 @@
 <%@page import="shop.dao.UserRepository"%>
 <%@page import="shop.dto.User"%>
 <%@page import="java.net.URLDecoder"%>
+<%@ include file="/layout/common.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -13,10 +14,9 @@
 </head>
 <body>   
 	<% 
-		String root = request.getContextPath();
 		String error = request.getParameter("error");
 		
-		String loginId = (String) session.getAttribute("loginId");
+		loginId = (String) session.getAttribute("loginId");
 		loginId = loginId != null ? loginId : "";
 		
 	    if (loginId.equals("")) {
